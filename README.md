@@ -1,6 +1,6 @@
 # OpenClaw Feishu Cron Kit
 
-> 一套面向新手的飞书消息发送机制示例项目，解决 3 个问题：模板化发送、固定话题持续回复、失败自动补发。
+> 一套从生产环境抽离出来的飞书消息发送机制项目，聚焦 3 个真实场景：模板化发送、固定话题持续回复、失败自动补发。
 
 ## 这是什么
 
@@ -11,7 +11,7 @@
 - 希望每次完整报告之后，再自动补一条**摘要 reply**
 - 希望飞书临时失败时，不要等到下一小时或明天才恢复，而是自动补发
 
-这个项目把这套机制拆成了一个独立、可开源、可复用的最小实现。
+这个项目不是为了开源而重新设计的一套 demo，而是从真实生产链路里抽出一条最有复用价值的主机制，并在脱敏后整理成独立仓库。
 
 ```ascii
 你会得到的能力
@@ -34,7 +34,39 @@
 - 支持同话题自动摘要 reply
 - 支持补发队列与补发审计
 - 支持 `jobs.json` 校验，避免错误 `job_id` 新开错误话题
-- 所有示例配置都已脱敏，可直接作为模板改造
+- 多 Agent 多账号可独立配置，适合实际生产中的多机器人模式
+- 所有示例配置都已脱敏，但模板名称和业务场景保持生产实际语义
+
+## 这些内容来自真实生产场景
+
+这个仓库里的模板名称和任务类型，不是为了开源特意虚构的，而是来自真实生产里长期使用的 Agent 流水线节点，例如：
+
+```ascii
+内容侧（blogger）
+  -> AI 热点扫描
+  -> 深度选题研究
+  -> 周度即刻选题计划
+  -> 即刻 - 自动化内容创作
+  -> 即刻评论回复监控
+  -> Twitter/X 社媒监控
+
+总管侧（main）
+  -> 每日日记汇总
+  -> 每日知识整理
+
+工程侧（engineer）
+  -> 系统状态巡检
+
+进化侧（evolution）
+  -> 高质量 Skill 挖掘
+  -> Skill 试用评估报告
+  -> Skill 智能分发
+```
+
+这里做了两层取舍：
+
+- 保留真实业务节点名称、固定话题思路、补发机制和多 Agent 路由方式
+- 去掉真实群 ID、open_id、App 凭证、生产路径和内部耦合实现
 
 ## 适合谁
 
@@ -58,7 +90,7 @@ openclaw-feishu-cron-kit
 │  ├─ feishu-templates.example.json
 │  ├─ jobs.example.json
 │  ├─ accounts.example.json
-│  └─ payloads/
+│  └─ payloads/            # 生产场景脱敏样例
 ├─ state/                  # 本地运行时状态（默认不提交）
 ├─ logs/                   # 本地审计日志（默认不提交）
 ├─ .env.example
@@ -113,6 +145,44 @@ python3 --version
 - `app_secret`
 - 一个要发消息的目标 `chat_id`
 - 如果你想在摘要里 `@某人`，还需要这个人的 `open_id`
+
+### 2.1 如果你是多 Agent 模式
+
+这套机制非常适合多 Agent 多机器人生产环境。
+
+```ascii
+推荐结构
+────────────────────────────────
+blogger agent
+  -> blogger 飞书应用
+  -> blogger 自己的 chat_id / open_id 作用域
+
+main agent
+  -> main 飞书应用
+  -> main 自己的 chat_id / open_id 作用域
+
+engineer agent
+  -> engineer 飞书应用
+
+evolution agent
+  -> evolution 飞书应用
+```
+
+要注意一个很容易踩坑的事实：
+
+```ascii
+同一个接收人
+  在不同飞书应用下
+    -> open_id 可能不同
+```
+
+也就是说，如果你在 `blogger` 模板里能正确 `@超级峰`，不代表在 `evolution` 模板里也能直接复用同一个 `open_id`。
+
+推荐做法：
+
+- 每个 agent 对应自己的飞书应用账号
+- 每个模板在自己的 agent 作用域下单独配置 `mention_open_ids`
+- 不要跨 agent 复用同一个 `open_id` 占位值
 
 ### 3. 一个目录用于保存状态和日志
 
@@ -184,6 +254,29 @@ FEISHU_APP_SECRET=your_real_app_secret
 - `title_template`：第一次创建话题时的话题标题
 - `mention_open_ids`：摘要 reply 里要 @ 谁
 
+如果你是多 Agent 模式，建议直接按 agent 分组配置模板，而不是做一个所有人共用的大杂烩模板集。
+
+```ascii
+推荐做法
+────────────────────────────────
+blogger
+  -> ai-hotspot
+  -> topic-research-report
+  -> jike-publish-report
+
+main
+  -> daily-diary
+  -> daily-knowledge
+
+engineer
+  -> system-status
+
+evolution
+  -> skill-discovery-report
+  -> skill-trial-report
+  -> skill-distribution
+```
+
 ### 第四步：准备 jobs 配置
 
 打开：
@@ -202,12 +295,26 @@ FEISHU_APP_SECRET=your_real_app_secret
   -> 一个业务任务，对应一个稳定 job_id
 ```
 
+当前示例 `jobs.example.json` 里，已经直接放了贴近生产的任务名，例如：
+
+- `AI 热点扫描（每2小时）`
+- `深度选题研究（每天）`
+- `即刻自动化内容创作（每小时）`
+- `Twitter/X 社媒监控（每小时）`
+- `每日日记汇总`
+- `系统状态巡检（每小时）`
+- `进化官每小时 Skill 搜索测试`
+
 ### 第五步：准备 payload 数据
 
 示例已经给你了：
 
 - [ai-hotspot.example.json](/Users/mileson/Workspace/AI%20元宇宙/openclaw-feishu-cron-kit/examples/payloads/ai-hotspot.example.json)
 - [daily-diary.example.json](/Users/mileson/Workspace/AI%20元宇宙/openclaw-feishu-cron-kit/examples/payloads/daily-diary.example.json)
+- [twitter-monitor.example.json](/Users/mileson/Workspace/AI%20元宇宙/openclaw-feishu-cron-kit/examples/payloads/twitter-monitor.example.json)
+- [system-status.example.json](/Users/mileson/Workspace/AI%20元宇宙/openclaw-feishu-cron-kit/examples/payloads/system-status.example.json)
+- [skill-trial.example.json](/Users/mileson/Workspace/AI%20元宇宙/openclaw-feishu-cron-kit/examples/payloads/skill-trial.example.json)
+- [jike-publish.example.json](/Users/mileson/Workspace/AI%20元宇宙/openclaw-feishu-cron-kit/examples/payloads/jike-publish.example.json)
 
 你最需要关心的是 `thread_summary`：
 
@@ -291,6 +398,50 @@ python3 scripts/process_retry_queue.py
   -> 不再新开话题
 ```
 
+## 生产环境里推荐怎么组织多 Agent
+
+如果你准备把这套东西放回真实生产环境，建议按下面的结构组织：
+
+```ascii
+生产推荐组织方式
+────────────────────────────────
+accounts.example.json
+  -> 管理不同 agent 的 app_id / app_secret
+
+feishu-templates.example.json
+  -> 管理不同 agent 的模板、群路由、固定话题名、@人配置
+
+jobs.example.json
+  -> 管理每条定时任务的稳定 job_id 和 schedule
+
+payloads/
+  -> 放各个业务模板对应的数据结构示例
+```
+
+不要这样做：
+
+```ascii
+不推荐
+────────────────────────────────
+1. agent 自己手写 target-id
+2. agent 自己手写 delivery-channel
+3. agent 自己自由拼 thread-title
+4. 不同 agent 共用同一个 open_id 配置
+5. job_id 每次动态生成
+```
+
+推荐这样做：
+
+```ascii
+推荐
+────────────────────────────────
+1. 模板决定发到哪
+2. job_id 决定这是哪条固定任务
+3. binding_key_template 决定固定话题身份
+4. 各 agent 维护自己的 open_id 作用域
+5. payload 只负责传业务数据
+```
+
 ## 哪些错误会自动补发
 
 会补发：
@@ -357,6 +508,12 @@ logs/
 - 不包含真实 `open_id`
 - 不包含真实 `app_secret`
 - 不包含任何生产环境路径
+
+但仓库中保留了真实生产里的任务语义和模板命名方式，目的是让你能直接理解：
+
+- 哪些任务适合固定话题
+- 哪些任务适合摘要 reply
+- 多 Agent 模式下配置应该放在哪一层
 
 你在使用时，请自己替换为真实值，并确保：
 

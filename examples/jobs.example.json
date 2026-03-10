@@ -17,6 +17,81 @@
       }
     },
     {
+      "id": "blogger-topic-research-daily",
+      "agentId": "blogger",
+      "name": "深度选题研究（每天）",
+      "enabled": true,
+      "schedule": {
+        "kind": "cron",
+        "expr": "20 11 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "payload": {
+        "kind": "agentTurn",
+        "message": "整理高潜选题并调用 send_message.py 发送 topic-research-report 模板。"
+      }
+    },
+    {
+      "id": "blogger-weekly-jike-plan",
+      "agentId": "blogger",
+      "name": "周度即刻选题计划制定",
+      "enabled": true,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 * * 1",
+        "tz": "Asia/Shanghai"
+      },
+      "payload": {
+        "kind": "agentTurn",
+        "message": "整理周度内容安排并调用 send_message.py 发送 weekly-jike-plan-report 模板。"
+      }
+    },
+    {
+      "id": "blogger-jike-publish-hourly",
+      "agentId": "blogger",
+      "name": "即刻自动化内容创作（每小时）",
+      "enabled": true,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 * * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "payload": {
+        "kind": "agentTurn",
+        "message": "完成即刻内容生成并调用 send_message.py 发送 jike-publish-report 模板。"
+      }
+    },
+    {
+      "id": "blogger-jike-reply-monitor-hourly",
+      "agentId": "blogger",
+      "name": "即刻评论回复监控（每小时）",
+      "enabled": true,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 * * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "payload": {
+        "kind": "agentTurn",
+        "message": "检查即刻评论与回复状态并调用 send_message.py 发送 jike-reply-monitor 模板。"
+      }
+    },
+    {
+      "id": "blogger-twitter-monitor-hourly",
+      "agentId": "blogger",
+      "name": "Twitter/X 社媒监控（每小时）",
+      "enabled": true,
+      "schedule": {
+        "kind": "cron",
+        "expr": "15 * * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "payload": {
+        "kind": "agentTurn",
+        "message": "提取社媒动态中文概要并调用 send_message.py 发送 openclaw-twitter-monitor 模板。"
+      }
+    },
+    {
       "id": "main-daily-diary",
       "agentId": "main",
       "name": "每日日记汇总",
@@ -29,6 +104,81 @@
       "payload": {
         "kind": "agentTurn",
         "message": "汇总当日日记并调用 send_message.py 发送 daily-diary 模板。"
+      }
+    },
+    {
+      "id": "main-daily-knowledge",
+      "agentId": "main",
+      "name": "每日知识整理",
+      "enabled": true,
+      "schedule": {
+        "kind": "cron",
+        "expr": "45 23 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "payload": {
+        "kind": "agentTurn",
+        "message": "整理长期知识资产并调用 send_message.py 发送 daily-knowledge 模板。"
+      }
+    },
+    {
+      "id": "engineer-system-status-hourly",
+      "agentId": "engineer",
+      "name": "系统状态巡检（每小时）",
+      "enabled": true,
+      "schedule": {
+        "kind": "cron",
+        "expr": "10 * * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "payload": {
+        "kind": "agentTurn",
+        "message": "汇总服务巡检结果并调用 send_message.py 发送 system-status 模板。"
+      }
+    },
+    {
+      "id": "evolution-skill-hourly",
+      "agentId": "evolution",
+      "name": "进化官每小时 Skill 搜索测试",
+      "enabled": true,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 * * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "payload": {
+        "kind": "agentTurn",
+        "message": "发现候选 Skill 并调用 send_message.py 发送 skill-discovery-report 模板。"
+      }
+    },
+    {
+      "id": "evolution-skill-trial-hourly",
+      "agentId": "evolution",
+      "name": "进化官 Skill 试用评估（每小时）",
+      "enabled": true,
+      "schedule": {
+        "kind": "cron",
+        "expr": "20 * * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "payload": {
+        "kind": "agentTurn",
+        "message": "评估候选 Skill 并调用 send_message.py 发送 skill-trial-report 模板。"
+      }
+    },
+    {
+      "id": "evolution-skill-distribution-6h",
+      "agentId": "evolution",
+      "name": "Skill 智能分发（每6小时）",
+      "enabled": true,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */6 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "payload": {
+        "kind": "agentTurn",
+        "message": "生成 Skill 分发建议并调用 send_message.py 发送 skill-distribution 模板。"
       }
     },
     {

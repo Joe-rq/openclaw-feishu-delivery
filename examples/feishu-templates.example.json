@@ -6,7 +6,7 @@
       "required_fields": ["title", "summary", "items", "timestamp", "thread_summary"],
       "route": {
         "target": {
-          "id": "oc_your_chat_id_here",
+          "id": "oc_blogger_chat_id_here",
           "type": "chat_id"
         },
         "delivery": {
@@ -25,7 +25,157 @@
             "enabled": true,
             "required": true,
             "channel": "post",
-            "mention_open_ids": ["ou_your_open_id_here"]
+            "mention_open_ids": ["ou_blogger_scope_open_id_here"]
+          }
+        }
+      }
+    },
+    "topic-research-report": {
+      "description": "深度选题研究",
+      "header_template": "blue",
+      "required_fields": ["title", "summary", "items", "timestamp", "thread_summary"],
+      "route": {
+        "target": {
+          "id": "oc_blogger_chat_id_here",
+          "type": "chat_id"
+        },
+        "delivery": {
+          "channel": "topic"
+        },
+        "policy": {
+          "lock_target": true,
+          "lock_delivery": true
+        },
+        "thread": {
+          "enabled": true,
+          "binding_key_template": "blogger:topic-research",
+          "title_template": "【深度选题研究】",
+          "recreate_on_root_missing": true,
+          "summary_reply": {
+            "enabled": true,
+            "required": true,
+            "channel": "post",
+            "mention_open_ids": ["ou_blogger_scope_open_id_here"]
+          }
+        }
+      }
+    },
+    "weekly-jike-plan-report": {
+      "description": "周度即刻选题计划",
+      "header_template": "wathet",
+      "required_fields": ["title", "summary", "sections", "timestamp", "thread_summary"],
+      "route": {
+        "target": {
+          "id": "oc_blogger_chat_id_here",
+          "type": "chat_id"
+        },
+        "delivery": {
+          "channel": "topic"
+        },
+        "policy": {
+          "lock_target": true,
+          "lock_delivery": true
+        },
+        "thread": {
+          "enabled": true,
+          "binding_key_template": "blogger:weekly-jike-plan",
+          "title_template": "【周度即刻选题计划】",
+          "recreate_on_root_missing": true,
+          "summary_reply": {
+            "enabled": true,
+            "required": true,
+            "channel": "post",
+            "mention_open_ids": ["ou_blogger_scope_open_id_here"]
+          }
+        }
+      }
+    },
+    "jike-publish-report": {
+      "description": "即刻 - 自动化内容创作",
+      "header_template": "turquoise",
+      "required_fields": ["title", "summary", "sections", "timestamp", "thread_summary"],
+      "route": {
+        "target": {
+          "id": "oc_blogger_chat_id_here",
+          "type": "chat_id"
+        },
+        "delivery": {
+          "channel": "topic"
+        },
+        "policy": {
+          "lock_target": true,
+          "lock_delivery": true
+        },
+        "thread": {
+          "enabled": true,
+          "binding_key_template": "blogger:jike-publish",
+          "title_template": "【自动化内容创作 - 即刻】",
+          "recreate_on_root_missing": true,
+          "summary_reply": {
+            "enabled": true,
+            "required": true,
+            "channel": "post",
+            "mention_open_ids": ["ou_blogger_scope_open_id_here"]
+          }
+        }
+      }
+    },
+    "jike-reply-monitor": {
+      "description": "即刻评论回复监控",
+      "header_template": "orange",
+      "required_fields": ["title", "summary", "sections", "timestamp", "thread_summary"],
+      "route": {
+        "target": {
+          "id": "oc_blogger_chat_id_here",
+          "type": "chat_id"
+        },
+        "delivery": {
+          "channel": "topic"
+        },
+        "policy": {
+          "lock_target": true,
+          "lock_delivery": true
+        },
+        "thread": {
+          "enabled": true,
+          "binding_key_template": "blogger:jike-reply-monitor",
+          "title_template": "【即刻评论回复监控】",
+          "recreate_on_root_missing": true,
+          "summary_reply": {
+            "enabled": true,
+            "required": true,
+            "channel": "post",
+            "mention_open_ids": ["ou_blogger_scope_open_id_here"]
+          }
+        }
+      }
+    },
+    "openclaw-twitter-monitor": {
+      "description": "Twitter/X 社媒监控",
+      "header_template": "purple",
+      "required_fields": ["title", "summary", "sections", "timestamp", "thread_summary"],
+      "route": {
+        "target": {
+          "id": "oc_blogger_chat_id_here",
+          "type": "chat_id"
+        },
+        "delivery": {
+          "channel": "topic"
+        },
+        "policy": {
+          "lock_target": true,
+          "lock_delivery": true
+        },
+        "thread": {
+          "enabled": true,
+          "binding_key_template": "blogger:twitter-monitor",
+          "title_template": "【Twitter/X 社媒监控】",
+          "recreate_on_root_missing": true,
+          "summary_reply": {
+            "enabled": true,
+            "required": true,
+            "channel": "post",
+            "mention_open_ids": ["ou_blogger_scope_open_id_here"]
           }
         }
       }
@@ -36,7 +186,7 @@
       "required_fields": ["title", "summary", "sections", "timestamp", "thread_summary"],
       "route": {
         "target": {
-          "id": "oc_your_chat_id_here",
+          "id": "oc_main_chat_id_here",
           "type": "chat_id"
         },
         "delivery": {
@@ -55,7 +205,157 @@
             "enabled": true,
             "required": true,
             "channel": "post",
-            "mention_open_ids": ["ou_your_open_id_here"]
+            "mention_open_ids": ["ou_main_scope_open_id_here"]
+          }
+        }
+      }
+    },
+    "daily-knowledge": {
+      "description": "每日知识整理",
+      "header_template": "green",
+      "required_fields": ["title", "summary", "sections", "timestamp", "thread_summary"],
+      "route": {
+        "target": {
+          "id": "oc_main_chat_id_here",
+          "type": "chat_id"
+        },
+        "delivery": {
+          "channel": "topic"
+        },
+        "policy": {
+          "lock_target": true,
+          "lock_delivery": true
+        },
+        "thread": {
+          "enabled": true,
+          "binding_key_template": "main:daily-knowledge",
+          "title_template": "【每日知识整理】",
+          "recreate_on_root_missing": true,
+          "summary_reply": {
+            "enabled": true,
+            "required": true,
+            "channel": "post",
+            "mention_open_ids": ["ou_main_scope_open_id_here"]
+          }
+        }
+      }
+    },
+    "system-status": {
+      "description": "系统状态巡检",
+      "header_template": "red",
+      "required_fields": ["title", "summary", "sections", "timestamp", "thread_summary"],
+      "route": {
+        "target": {
+          "id": "oc_engineer_chat_id_here",
+          "type": "chat_id"
+        },
+        "delivery": {
+          "channel": "topic"
+        },
+        "policy": {
+          "lock_target": true,
+          "lock_delivery": true
+        },
+        "thread": {
+          "enabled": true,
+          "binding_key_template": "engineer:system-status",
+          "title_template": "【系统状态巡检】",
+          "recreate_on_root_missing": true,
+          "summary_reply": {
+            "enabled": true,
+            "required": true,
+            "channel": "post",
+            "mention_open_ids": ["ou_engineer_scope_open_id_here"]
+          }
+        }
+      }
+    },
+    "skill-discovery-report": {
+      "description": "高质量 Skill 挖掘",
+      "header_template": "indigo",
+      "required_fields": ["title", "summary", "items", "timestamp", "thread_summary"],
+      "route": {
+        "target": {
+          "id": "oc_evolution_chat_id_here",
+          "type": "chat_id"
+        },
+        "delivery": {
+          "channel": "topic"
+        },
+        "policy": {
+          "lock_target": true,
+          "lock_delivery": true
+        },
+        "thread": {
+          "enabled": true,
+          "binding_key_template": "evolution:skill-hourly",
+          "title_template": "🧪 进化官每小时 Skill 搜索测试",
+          "recreate_on_root_missing": true,
+          "summary_reply": {
+            "enabled": true,
+            "required": true,
+            "channel": "post",
+            "mention_open_ids": ["ou_evolution_scope_open_id_here"]
+          }
+        }
+      }
+    },
+    "skill-trial-report": {
+      "description": "🧬 Skill 试用评估报告",
+      "header_template": "indigo",
+      "required_fields": ["title", "summary", "items", "timestamp", "thread_summary"],
+      "route": {
+        "target": {
+          "id": "oc_evolution_chat_id_here",
+          "type": "chat_id"
+        },
+        "delivery": {
+          "channel": "topic"
+        },
+        "policy": {
+          "lock_target": true,
+          "lock_delivery": true
+        },
+        "thread": {
+          "enabled": true,
+          "binding_key_template": "evolution:skill-hourly",
+          "title_template": "🧪 进化官每小时 Skill 搜索测试",
+          "recreate_on_root_missing": true,
+          "summary_reply": {
+            "enabled": true,
+            "required": true,
+            "channel": "post",
+            "mention_open_ids": ["ou_evolution_scope_open_id_here"]
+          }
+        }
+      }
+    },
+    "skill-distribution": {
+      "description": "🫴 Skill 智能分发",
+      "header_template": "violet",
+      "required_fields": ["title", "summary", "sections", "timestamp", "thread_summary"],
+      "route": {
+        "target": {
+          "id": "oc_evolution_chat_id_here",
+          "type": "chat_id"
+        },
+        "delivery": {
+          "channel": "topic"
+        },
+        "policy": {
+          "lock_target": true,
+          "lock_delivery": true
+        },
+        "thread": {
+          "enabled": true,
+          "binding_key_template": "evolution:skill-distribution",
+          "title_template": "【Skill 智能分发】",
+          "recreate_on_root_missing": true,
+          "summary_reply": {
+            "enabled": true,
+            "required": true,
+            "channel": "post",
+            "mention_open_ids": ["ou_evolution_scope_open_id_here"]
           }
         }
       }

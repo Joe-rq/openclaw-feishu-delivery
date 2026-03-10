@@ -7,6 +7,18 @@
     "blogger": {
       "app_id": "cli_your_blogger_app_id_here",
       "app_secret": "your_blogger_app_secret_here"
+    },
+    "main": {
+      "app_id": "cli_your_main_app_id_here",
+      "app_secret": "your_main_app_secret_here"
+    },
+    "engineer": {
+      "app_id": "cli_your_engineer_app_id_here",
+      "app_secret": "your_engineer_app_secret_here"
+    },
+    "evolution": {
+      "app_id": "cli_your_evolution_app_id_here",
+      "app_secret": "your_evolution_app_secret_here"
     }
   }
 }

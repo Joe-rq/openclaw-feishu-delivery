@@ -1,0 +1,33 @@
+{
+  "title": "🧬 Skill 试用评估报告",
+  "summary": "本轮完成 2 个候选 Skill 的试用评估，已给出建议结论。",
+  "items": [
+    {
+      "emoji": "🧪",
+      "title": "browser-automation",
+      "score": "A / 9.4",
+      "description": "适合用在多页面表单自动化与数据抓取场景，建议纳入高优先级试用。",
+      "platform": "OpenClaw"
+    },
+    {
+      "emoji": "🔍",
+      "title": "doc-auto-sync-checker",
+      "score": "B+ / 8.7",
+      "description": "适合作为文档同步检查辅助工具，建议进入低风险试点。",
+      "platform": "OpenClaw"
+    }
+  ],
+  "timestamp": "2026-03-10 15:20",
+  "thread_summary": {
+    "notice": "🧬 Skill 试用评估报告已完成",
+    "bullets": [
+      "已完成 2 个候选 Skill 的试用评估",
+      "最高优先级：browser-automation",
+      "详情见上一条完整卡片"
+    ],
+    "footer": "详情见上一条完整卡片。",
+    "mention_open_ids": [
+      "ou_evolution_scope_open_id_here"
+    ]
+  }
+}

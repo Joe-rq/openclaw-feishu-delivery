@@ -1,0 +1,34 @@
+{
+  "title": "系统状态巡检",
+  "summary": "本轮已完成核心服务、补发队列和定时任务状态检查。",
+  "timestamp": "2026-03-10 16:00",
+  "sections": [
+    {
+      "title": "核心服务",
+      "lines": [
+        "Feishu 发送器：正常",
+        "补发队列 worker：正常",
+        "定时任务调度：正常"
+      ]
+    },
+    {
+      "title": "需要关注",
+      "lines": [
+        "当前无 pending 补发任务",
+        "建议继续观察 429 / 5xx 的异常峰值"
+      ]
+    }
+  ],
+  "thread_summary": {
+    "notice": "系统状态巡检已完成",
+    "bullets": [
+      "核心服务状态：全部正常",
+      "补发队列：当前为空",
+      "详情见上一条完整卡片"
+    ],
+    "footer": "详情见上一条完整卡片。",
+    "mention_open_ids": [
+      "ou_engineer_scope_open_id_here"
+    ]
+  }
+}
